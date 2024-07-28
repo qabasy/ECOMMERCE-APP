@@ -1,8 +1,12 @@
 // import 'dart:ffi';
 
-import 'package:ecommerce/models/purchase.dart';
+// ignore_for_file: library_private_types_in_public_api, sort_child_properties_last
+
 import 'package:flutter/material.dart';
+
 import 'package:sizer/sizer.dart';
+
+import 'package:ecommerce/models/purchase.dart';
 
 class PurchasesScreen extends StatelessWidget {
   const PurchasesScreen({super.key});
@@ -22,7 +26,7 @@ class PurchasesScreen extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PurchaseForm()),
+              MaterialPageRoute(builder: (context) => const PurchaseForm()),
             );
           },
           tooltip: "Add",
@@ -114,22 +118,22 @@ class _PurchaseFormState extends State<PurchaseForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Purchase Form')),
+      appBar: AppBar(title: const Text('Purchase Form')),
       body: FutureBuilder<List<Purchase>>(
         future: _purchases,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
-            return Text('Error loading data');
+            return const Text('Error loading data');
           } else if (!snapshot.hasData) {
-            return Text('No data available');
+            return const Text('No data available');
           } else {
             final purchases = snapshot.data!;
             return ListView.builder(
               itemCount: purchases.length,
               itemBuilder: (context, index) {
-                final purchase = purchases[index];
+                // final purchase = purchases[index];
 
                 return const ListTile(
                   title: Card(
