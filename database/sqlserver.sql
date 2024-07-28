@@ -1,0 +1,105 @@
+CREATE TABLE [Employes] (
+  [ID] INT PRIMARY KEY IDENTITY(1, 1),
+  [Name] VARCHAR(255),
+  [Position] VARCHAR(100),
+  [Status] INT DEFAULT (1),
+  [create_date] DATETIME DEFAULT (CURRENT_TIMESTAMP),
+  [update_date] DATETIME DEFAULT (CURRENT_TIMESTAMP)
+)
+GO
+
+CREATE TABLE [Customers] (
+  [ID] INT PRIMARY KEY IDENTITY(1, 1),
+  [Name] VARCHAR(255),
+  [Status] INT DEFAULT (1),
+  [create_date] DATETIME DEFAULT (CURRENT_TIMESTAMP),
+  [update_date] DATETIME DEFAULT (CURRENT_TIMESTAMP)
+)
+GO
+
+CREATE TABLE [Companies] (
+  [ID] INT PRIMARY KEY IDENTITY(1, 1),
+  [Name] VARCHAR(255),
+  [Status] INT DEFAULT (1),
+  [Description] TEXT,
+  [EmployeeID] INT NOT NULL,
+  [create_date] DATETIME DEFAULT (CURRENT_TIMESTAMP),
+  [update_date] DATETIME DEFAULT (CURRENT_TIMESTAMP)
+)
+GO
+
+CREATE TABLE [Products] (
+  [ID] INT PRIMARY KEY IDENTITY(1, 1),
+  [Name] VARCHAR(255),
+  [Description] TEXT,
+  [Price] DECIMAL(10,2),
+  [Status] INT DEFAULT (1),
+  [CompanyID] INT NOT NULL,
+  [EmployeeID] INT NOT NULL,
+  [create_date] DATETIME DEFAULT (CURRENT_TIMESTAMP),
+  [update_date] DATETIME DEFAULT (CURRENT_TIMESTAMP)
+)
+GO
+
+CREATE TABLE [Units] (
+  [ID] INT PRIMARY KEY IDENTITY(1, 1),
+  [Name] VARCHAR(255),
+  [Description] TEXT,
+  [Price] DECIMAL(10,2),
+  [Status] INT DEFAULT (1)
+)
+GO
+
+CREATE TABLE [Purchases] (
+  [ID] INT PRIMARY KEY IDENTITY(1, 1),
+  [ProductID] INT NOT NULL,
+  [CustomerID] INT NOT NULL,
+  [Price] DECIMAL DEFAULT (0),
+  [UnitID] INT NOT NULL,
+  [Total] DECIMAL DEFAULT (0),
+  [EmployeeID] INT NOT NULL,
+  [create_date] DATETIME DEFAULT (CURRENT_TIMESTAMP)
+)
+GO
+
+CREATE TABLE [CustomersAddresses] (
+  [ID] INT PRIMARY KEY IDENTITY(1, 1),
+  [CustomerID] INT NOT NULL,
+  [Address] VARCHAR(255),
+  [CREATE_DATE] DATETIME DEFAULT (CURRENT_TIMESTAMP),
+  [UPDATE_DATE] DATETIME DEFAULT (CURRENT_TIMESTAMP)
+)
+GO
+
+CREATE TABLE [CompaniesAddresses] (
+  [ID] INT PRIMARY KEY IDENTITY(1, 1),
+  [CompanyID] INT NOT NULL,
+  [Address] VARCHAR(255),
+  [CREATE_DATE] DATETIME DEFAULT (CURRENT_TIMESTAMP),
+  [UPDATE_DATE] DATETIME DEFAULT (CURRENT_TIMESTAMP)
+)
+GO
+
+ALTER TABLE [Companies] ADD FOREIGN KEY ([EmployeeID]) REFERENCES [Employes] ([ID])
+GO
+
+ALTER TABLE [Products] ADD FOREIGN KEY ([EmployeeID]) REFERENCES [Employes] ([ID])
+GO
+
+ALTER TABLE [Products] ADD FOREIGN KEY ([CompanyID]) REFERENCES [Companies] ([ID])
+GO
+
+ALTER TABLE [Purchases] ADD FOREIGN KEY ([ProductID]) REFERENCES [Products] ([ID])
+GO
+
+ALTER TABLE [Purchases] ADD FOREIGN KEY ([CustomerID]) REFERENCES [Customers] ([ID])
+GO
+
+ALTER TABLE [Purchases] ADD FOREIGN KEY ([UnitID]) REFERENCES [Units] ([ID])
+GO
+
+ALTER TABLE [CustomersAddresses] ADD FOREIGN KEY ([CustomerID]) REFERENCES [Customers] ([ID])
+GO
+
+ALTER TABLE [CompaniesAddresses] ADD FOREIGN KEY ([CompanyID]) REFERENCES [Companies] ([ID])
+GO
